@@ -1,10 +1,11 @@
 
 //import '../App.css'
 import  '../assets/css/enzo.css'
+import {Link} from "react-router-dom";
 
 function App() {
     const workshops = [
-        { title: 'Mapping',  id: 1 },
+        { title: 'Mapping',content: 'Je suis mapping',  id: 1 },
         { title: 'Sceno',  id: 2 },
         { title: 'Dome',  id: 3 },
         { title: 'Reflet parallèle',  id: 4 },
@@ -17,20 +18,18 @@ function App() {
     ];
 
 
+
     function ShoppingList() {
         const listItems = workshops.map(workshop =>
                 <div key={workshop.id}
                      className="workshop-item"
                 >
-                    <button
+                    <Link to={`/enzo/${workshop.id}`}
                         className="workshop-link"
                         key={workshop.id}
-                        style={{
-                            fontWeight: 'bold',
-                        }}
                     >
                         {workshop.title}
-                    </button>
+                    </Link>
                 </div>
         );
 
