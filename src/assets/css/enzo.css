@@ -1,0 +1,35 @@
+.workshop-container {
+    border: 1px solid black;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+}
+.workshop-list {
+    flex-flow: row wrap;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+.workshop-item {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 2s, height 4s, transform 2s;
+    background: linear-gradient(45deg, #ff7f50, #1e90ff); /* Dégradé à 45 degrés */
+}
+.workshop-item:hover {
+    border: 1px solid red;
+    transform: scale(1.2);
+    transition-delay: 0s;
+}
+.workshop-link{
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: white;
+}
