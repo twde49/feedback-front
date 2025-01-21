@@ -1,8 +1,9 @@
 
-import '../App.css'
+//import '../App.css'
+import  '../assets/css/enzo.css'
 
 function App() {
-    const ateliers = [
+    const workshops = [
         { title: 'Mapping',  id: 1 },
         { title: 'Sceno',  id: 2 },
         { title: 'Dome',  id: 3 },
@@ -16,49 +17,37 @@ function App() {
     ];
 
     function ShoppingList() {
-        const listItems = ateliers.map(atelier =>
-                <div key={atelier.id}
-                     style={{
-                         border: '1px solid black',
-                         display: 'flex',
-                         flexDirection: 'row',
-                         width: '20%',
-                         height: '20%',
-                         justifyContent: 'center',
-                     }}
+        const listItems = workshops.map(workshop =>
+                <div key={workshop.id}
+                     className="workshop-item"
                 >
-                    <span
-                        key={atelier.id}
+                    <button
+                        className="workshop-link"
+                        key={workshop.id}
                         style={{
                             fontWeight: 'bold',
                         }}
                     >
-                        {atelier.title}
-                    </span>
+                        {workshop.title}
+                    </button>
                 </div>
         );
 
         return (
-            <div
-                style={{
-                    border: '1px solid black',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '90vh',
-                    justifyContent: 'center',
-                }}
-            >
-                <span>{listItems}</span>
-            </div>
-
+                <div className="workshop-list">{listItems}</div>
         );
     }
 
     return (
         <>
-            <ShoppingList/>
+            <div className="workshop-container">
+                <ShoppingList/>
+            </div>
+
         </>
     )
+
+
 }
 
 export default App
