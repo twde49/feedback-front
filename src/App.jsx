@@ -7,6 +7,7 @@ import Pierre from "./pages/Pierre.jsx";
 import Enzo from './pages/Enzo.jsx';
 import Workshop from './pages/Workshop.jsx';
 
+
 const App = () => {
   return (
     <div>
