@@ -16,6 +16,7 @@ function App() {
         { title: 'Dev app',  id: 10 },
     ];
 
+
     function ShoppingList() {
         const listItems = workshops.map(workshop =>
                 <div key={workshop.id}
