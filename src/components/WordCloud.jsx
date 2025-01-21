@@ -52,7 +52,7 @@ const WordCloud = () => {
                 text: word.text,
                 size: word.size,
             })))
-            .padding(10) // Augmente l'espacement pour éviter les chevauchements
+            .padding(20) // Augmente l'espacement pour éviter les chevauchements
             .font('Poppins')
             .fontSize((d) => d.size) // Taille des mots
             .rotate(() => 0) // Pas de rotation
@@ -114,7 +114,7 @@ const WordCloud = () => {
                 .transition()
                 .duration(200)
                 .style('fill', '#dda20c') // Change la couleur
-                .style('font-size', `${d.size * 1.5}px`) // Agrandit légèrement
+                .style('font-size', `${d.size * 1}px`) // Agrandit légèrement
                 .attr('x', d.x + Math.random() * 30 - 15) // Déplace légèrement horizontalement
                 .attr('y', d.y + Math.random() * 30 - 15); // Déplace légèrement verticalement
         }
