@@ -1,18 +1,14 @@
-import { useEffect, useRef } from "react";
-import cloud from "d3-cloud";
+import { useEffect, useRef } from 'react';
+import * as d3 from 'd3';
+import d3Cloud from 'd3-cloud';
 
 const WordCloud = () => {
-    const canvasRef = useRef(null);
-
-    function getFuturisticColor() {
-        // Palette futuriste/espace
-        const colors = [
-            "#00FFFF", // Cyan
-        ];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
+    const svgRef = useRef();
 
     useEffect(() => {
+        const width = window.innerWidth; // Largeur de l'écran
+        const height = window.innerHeight; // Hauteur de l'écran
+
         const words = [
             { text: "Multivers", size: 50 },
             { text: "Dimension", size: 40 },
@@ -46,68 +42,95 @@ const WordCloud = () => {
             { text: "Infini", size: 40 },
         ];
 
-        const layout = cloud()
-            .size([1000, 700])
-            .words(words)
-            .padding(15) // Espacement entre les mots
-            .rotate(() => 0) // Toujours horizontal
-            .fontSize((d) => d.size)
-            .on("end", draw);
+        // Efface le contenu précédent
+        d3.select(svgRef.current).selectAll('*').remove();
+
+        // Crée le nuage de mots
+        const layout = d3Cloud()
+            .size([width, height])
+            .words(words.map((word) => ({
+                text: word.text,
+                size: word.size,
+            })))
+            .padding(10) // Augmente l'espacement pour éviter les chevauchements
+            .font('Poppins')
+            .fontSize((d) => d.size) // Taille des mots
+            .rotate(() => 0) // Pas de rotation
+            .on('end', draw);
 
         layout.start();
 
         function draw(words) {
-            const canvas = canvasRef.current;
-            const context = canvas.getContext("2d");
+            const svg = d3
+                .select(svgRef.current)
+                .attr('viewBox', `0 0 ${width} ${height}`)
+                .attr('preserveAspectRatio', 'xMidYMid meet')
+                .append('g')
+                .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
-            // Efface le canvas
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            const textElements = svg
+                .selectAll('text')
+                .data(words)
+                .enter()
+                .append('text')
+                .style('font-size', (d) => `${d.size}px`)
+                .style('font-family', 'Poppins')
+                .style('fill', () => getSpaceColor())
+                .attr('text-anchor', 'middle')
+                .attr('x', (d) => d.x)
+                .attr('y', (d) => d.y)
+                .text((d) => d.text)
+                .on('mouseover', handleMouseOver) // Effet au survol
+                .on('mouseout', handleMouseOut);  // Retour à la normale
 
-            words.forEach((word) => {
-                context.save();
-                context.font = `${word.size}px serif`;
-                context.fillStyle = getFuturisticColor();
-                context.textAlign = "center";
-                context.textBaseline = "middle";
-                context.translate(word.x + canvas.width / 2, word.y + canvas.height / 2);
+            // Animation
+            animateMovement(textElements);
+        }
 
-                // Définir une animation zoom/dézoom
-                let scale = 1;
-                let growing = true;
+        function getSpaceColor() {
+            const colors = [
+                '#001f3f',
+                '#3D59AB',
+                '#483D8B',
+                '#000000',
+                '#1E90FF',
+                '#9370DB',
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
 
-                function animate() {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
+        function animateMovement(elements) {
+            elements
+                .transition()
+                .duration(4000) // Plus lent
+                .ease(d3.easeLinear)
+                .attr('x', (d) => Math.max(-width / 2 + d.size, Math.min(width / 2 - d.size, d.x + Math.random() * 30 - 15)))
+                .attr('y', (d) => Math.max(-height / 2 + d.size, Math.min(height / 2 - d.size, d.y + Math.random() * 30 - 15)))
+                .on('end', () => animateMovement(elements)); // Boucle infinie
+        }
 
-                    // Met à jour le scale
-                    if (growing) {
-                        scale += 0.02;
-                        if (scale >= 1.2) growing = false;
-                    } else {
-                        scale -= 0.02;
-                        if (scale <= 1) growing = true;
-                    }
+        function handleMouseOver(event, d) {
+            d3.select(event.target)
+                .transition()
+                .duration(200)
+                .style('fill', '#dda20c') // Change la couleur
+                .style('font-size', `${d.size * 1.5}px`) // Agrandit légèrement
+                .attr('x', d.x + Math.random() * 30 - 15) // Déplace légèrement horizontalement
+                .attr('y', d.y + Math.random() * 30 - 15); // Déplace légèrement verticalement
+        }
 
-                    // Dessiner les mots avec scale
-                    words.forEach((w) => {
-                        context.save();
-                        context.translate(w.x + canvas.width / 2, w.y + canvas.height / 2);
-                        context.scale(w === word ? scale : 1, w === word ? scale : 1);
-                        context.font = `${w.size}px serif`;
-                        context.fillStyle = getFuturisticColor();
-                        context.fillText(w.text, 0, 0);
-                        context.restore();
-                    });
-
-                    requestAnimationFrame(animate);
-                }
-
-                animate(); // Lancer l'animation
-                context.restore();
-            });
+        function handleMouseOut(event, d) {
+            d3.select(event.target)
+                .transition()
+                .duration(200)
+                .style('fill', getSpaceColor()) // Retour à la couleur initiale
+                .style('font-size', `${d.size}px`) // Retour à la taille initiale
+                .attr('x', d.x) // Retour à la position initiale
+                .attr('y', d.y); // Retour à la position initiale
         }
     }, []);
 
-    return <canvas ref={canvasRef} width={1000} height={700} />;
+    return <svg ref={svgRef} style={{ width: '100%', overflow: 'hidden' }}></svg>;
 };
 
 export default WordCloud;
