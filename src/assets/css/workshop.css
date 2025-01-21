@@ -1,0 +1,21 @@
+.banner{
+    height: 20vh;
+    width: 100%;
+    background-color: coral;
+}
+.zoom-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+}
+.zoom-details {
+
+}
+.zoom-title {
+
+}
+.zoom-content {
+
+}
