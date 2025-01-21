@@ -1,7 +1,11 @@
-function App () {
+import WordCloud from "../components/WordCloud.jsx";
 
+const Pierre = () => {
     return (
-        <>coucou</>
-    )
-}
-export default App
+        <div>
+            <WordCloud />
+        </div>
+    );
+};
+
+export default Pierre;
