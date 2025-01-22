@@ -1,9 +1,9 @@
 
 //import '../App.css'
 import '../index.css';
-import  '../assets/css/enzo.css'
-
+import  '../assets/css/listWorkshop.css';
 import {Link} from "react-router-dom";
+import Navbar from "../components/Navbar.jsx";
 
 function App() {
     const workshops = [
@@ -21,14 +21,14 @@ function App() {
 
 
 
-    function ShoppingList() {
+    function WorkshopList() {
         const listItems = workshops.map(workshop =>
             <Link to={`/enzo/${workshop.id}`}
-                  className="workshop-item text-2xl bg-[#FF7F50FF] text-black font-bold size-fit flex flex-col rounded-lg p-3 justify-center items-center border-2 h-1/2 w-1/4"
+                  className="workshop-item text-2xl bg-[#C16499] text-black font-bold size-fit flex flex-col rounded-lg p-2 justify-center items-center border-2 h-1/2 w-1/4 border-transparent"
                   key={workshop.id}
             >
                 <div key={workshop.id}
-                     className="flex size-1/4 justify-center items-center w-full"
+                     className="titre flex size-1/4 justify-center items-center w-full"
                 >
                     {workshop.title}
                 </div>
@@ -50,13 +50,13 @@ function App() {
 
     return (
         <>
+            <Navbar />
             <div className="flex flex-col w-full justify-center items-center h-full">
                 <div className="workshop-container container sm: flex h-screen justify-center items-center pt-28">
-                    <ShoppingList/>
+                    <WorkshopList/>
                 </div>
+
             </div>
-
-
         </>
     )
 

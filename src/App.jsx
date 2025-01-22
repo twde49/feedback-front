@@ -5,7 +5,7 @@ import Kaya from "./pages/kaya.jsx";
 import Nuage from "./pages/nuage.jsx";
 import Audio from "./pages/Audio.jsx";
 import Pierre from "./pages/Pierre.jsx";
-import Enzo from './pages/Enzo.jsx';
+import Enzo from './pages/ListWorkshop.jsx';
 import Workshop from './pages/Workshop.jsx';
 import Api from "./pages/api.jsx";
 

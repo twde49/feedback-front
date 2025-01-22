@@ -1,0 +1,38 @@
+body{
+    background-color: #29153A;
+}
+
+.workshop-item {
+    transition: width 2s, height 4s, transform 0.5s;
+}
+.workshop-item:hover {
+    transform: scale(1.2);
+    transition-delay: 0s;
+
+}
+
+.workshop-item:hover .titre {
+    font-variation-settings: "wght" 100, "ital" 0;
+    text-shadow: none;
+    color: white;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff00cc, #53185A);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: portal 4s infinite;
+    rotate: 180deg;
+}
+
+@keyframes portal {
+    0% {
+        clip-path: circle(0% at 50% 50%);
+    }
+    50% {
+        clip-path: circle(70% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(0% at 50% 50%);
+    }
+}
+
+
