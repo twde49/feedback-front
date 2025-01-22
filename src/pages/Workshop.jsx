@@ -1,6 +1,7 @@
 
 //import '../App.css'
-import  '../assets/css/workshop.css'
+import '../index.css';
+import  '../assets/css/workshop.css';
 import { useParams } from 'react-router-dom';
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
 
         return (
             <div className="zoom-details">
-                <h2 className="zoom-title">
+                <h2 className="zoom-title text-3xl ">
                     {workshop.title}
                 </h2>
                 <p className="zoom-content">
@@ -38,12 +39,12 @@ function App() {
     }
     return (
         <>
-            <div className="banner"></div>
-            <div className="zoom-container">
+            <p>Blala</p>
+            <div className="bg-blue-500 text-white text-3xl font-bold p-5">
                 <ZoomInWorkshop />
             </div>
         </>
-        )
-    }
+    )
+}
 
 export default App
