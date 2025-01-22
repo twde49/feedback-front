@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import './index.css';
 import Home from './pages/Home.jsx';
 import Kaya from "./pages/kaya.jsx";
 import Nuage from "./pages/nuage.jsx";
@@ -10,7 +11,7 @@ import Workshop from './pages/Workshop.jsx';
 
 const App = () => {
   return (
-    <div>
+    <div className="h-full w-screen flex flex-col items-center justify-center min-h-screen">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/malakaya" element={<Kaya />} />

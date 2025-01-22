@@ -1,6 +1,8 @@
 
 //import '../App.css'
+import '../index.css';
 import  '../assets/css/enzo.css'
+
 import {Link} from "react-router-dom";
 
 function App() {
@@ -22,7 +24,7 @@ function App() {
     function ShoppingList() {
         const listItems = workshops.map(workshop =>
                 <div key={workshop.id}
-                     className="workshop-item"
+                     className="workshop-item flex flex-row rounded-lg p-3 justify-center items-center"
                 >
                     <Link to={`/enzo/${workshop.id}`}
                         className="workshop-link"
@@ -34,13 +36,13 @@ function App() {
         );
 
         return (
-                <div className="workshop-list">{listItems}</div>
+                <div className="workshop-list flex h-2/4 justify-center items-center">{listItems}</div>
         );
     }
 
     return (
         <>
-            <div className="workshop-container">
+            <div className="workshop-container container flex h-screen justify-items-center">
                 <ShoppingList/>
             </div>
 
