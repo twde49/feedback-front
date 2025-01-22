@@ -1,4 +1,5 @@
 import WordCloud from "../components/WordCloud.jsx";
+import "../index.css"
 
 const Pierre = () => {
     return (
