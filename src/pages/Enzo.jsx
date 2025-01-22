@@ -23,32 +23,35 @@ function App() {
 
     function ShoppingList() {
         const listItems = workshops.map(workshop =>
+            <Link to={`/enzo/${workshop.id}`}
+                  className="workshop-item text-2xl bg-[#FF7F50FF] text-black font-bold size-fit flex flex-col rounded-lg p-3 justify-center items-center border-2 h-1/2 w-1/4"
+                  key={workshop.id}
+            >
                 <div key={workshop.id}
-                     className="workshop-item flex flex-col rounded-lg p-3 justify-center items-center border-2 h-1/2 w-1/4"
+                     className="flex size-1/4 justify-center items-center w-full"
                 >
-                    <Link to={`/enzo/${workshop.id}`}
-                        className="workshop-link"
-                        key={workshop.id}
-                    >
-                        {workshop.title}
-                    </Link>
-                    <div key={workshop.id}
-                     className="flex h-2/4"
-                    >
-                        <img src="" alt="dzfec" />
-                    </div>
+                    {workshop.title}
                 </div>
+
+                <div key={workshop.id}
+                     className="flex size-3/4 w-full rounded-lg"
+                >
+                    <img className="size-full" src="../../public/snail.jpeg" alt="image" />
+                </div>
+            </Link>
         );
 
         return (
-                <div className="workshop-list flex h-2/4 justify-center items-center flex-row flex-wrap gap-5">{listItems}</div>
+            <div className="workshop-list flex h-full justify-center items-center flex-row flex-wrap gap-14 ">
+                {listItems}
+            </div>
         );
     }
 
     return (
         <>
-            <div className="flex flex-col w-full justify-center items-center">
-                <div className="workshop-container container flex h-screen justify-center items-center">
+            <div className="flex flex-col w-full justify-center items-center h-full">
+                <div className="workshop-container container sm: flex h-screen justify-center items-center pt-28">
                     <ShoppingList/>
                 </div>
             </div>
