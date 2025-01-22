@@ -11,18 +11,19 @@ import Workshop from './pages/Workshop.jsx';
 
 const App = () => {
   return (
-    <div className="h-full w-screen flex flex-col items-center justify-center min-h-screen">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/malakaya" element={<Kaya />} />
-        <Route path="/nuage" element={<Nuage />} />
-        <Route path="/audio" element={<Audio />} />
-        <Route path="/pierre" element={<Pierre />} />
-        <Route path="/enzo" element={<Enzo />} />
-        <Route path="/enzo/:id" element={<Workshop />} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/malakaya" element={<Kaya />} />
+          <Route path="/nuage" element={<Nuage />} />
+          <Route path="/audio" element={<Audio />} />
+          <Route path="/pierre" element={<Pierre />} />
+            <Route path="/enzo" element={<Enzo />} />
+            <Route path="/enzo/:id" element={<Workshop />} />
 
-      </Routes>
-    </div>
+
+
+        </Routes>
+
   );
 };
 
