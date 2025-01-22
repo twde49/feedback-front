@@ -11,6 +11,7 @@ const WordCloud = () => {
         link.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap';
         link.rel = 'stylesheet';
         document.head.appendChild(link);
+        document.body.style.background = 'radial-gradient(circle, #1d1d27, #0c0c15)'; // couleur du fond
 
         const width = window.innerWidth;
         const height = window.innerHeight;
@@ -75,9 +76,9 @@ const WordCloud = () => {
 
             function getSpaceColor() {
                 const colors = [
-                    '#22253a',
+                    '#51557c',
                     '#466f7c',
-                    '#000000',
+                    '#ffffff',
                     '#00c4b3',
                     '#9370DB',
                 ];
