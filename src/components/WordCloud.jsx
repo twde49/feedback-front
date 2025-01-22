@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import * as d3 from 'd3';
 import d3Cloud from 'd3-cloud';
+import NavBar from '../components/Navbar.jsx';
 
 const WordCloud = () => {
     const svgRef = useRef();
@@ -119,7 +120,11 @@ const WordCloud = () => {
         fetchWords();
     }, []);
 
-    return <svg ref={svgRef} style={{ width: '100%', overflow: 'hidden' }}></svg>;
-};
+    return (
+        <>
+            <NavBar />
+            <svg ref={svgRef} style={{ width: '100%', paddingTop:'50px', overflow: 'hidden' }}></svg>
+        </>
+    );};
 
 export default WordCloud;
