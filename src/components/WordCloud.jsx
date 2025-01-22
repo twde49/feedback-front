@@ -7,20 +7,24 @@ const WordCloud = () => {
     const svgRef = useRef();
 
     useEffect(() => {
-        const width = window.innerWidth; // Largeur de l'écran
-        const height = window.innerHeight; // Hauteur de l'écran
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
 
-        // Fonction pour récupérer les mots depuis Random Word API
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
         const fetchWords = async () => {
             try {
                 const response = await axios.get('https://random-word-api.herokuapp.com/word', {
-                    params: { number: 30 }, // Obtenir 30 mots aléatoires
+                    params: { number: 30 },
                     lang: 'fr',
                 });
 
                 const words = response.data.map((word, index) => ({
                     text: word,
-                    size: Math.floor(Math.random() * 30) + 20 + index, // Taille aléatoire entre 20 et 50
+                    size: Math.floor(Math.random() * 30) + 20 + index, // Taille aléatoire
                 }));
                 createWordCloud(words);
             } catch (error) {
@@ -28,15 +32,15 @@ const WordCloud = () => {
             }
         };
 
-        // Fonction pour créer le nuage de mots
+
         const createWordCloud = (words) => {
             d3.select(svgRef.current).selectAll('*').remove();
 
             const layout = d3Cloud()
                 .size([width, height])
                 .words(words)
-                .padding(20) // Augmente l'espacement pour éviter les chevauchements
-                .font('Poppins')
+                .padding(40)
+                .font('Orbitron')
                 .fontSize((d) => d.size) // Taille des mots
                 .rotate(() => 0) // Pas de rotation
                 .on('end', draw);
@@ -57,26 +61,24 @@ const WordCloud = () => {
                     .enter()
                     .append('text')
                     .style('font-size', (d) => `${d.size}px`)
-                    .style('font-family', 'Poppins')
+                    .style('font-family', 'Orbitron')
                     .style('fill', () => getSpaceColor())
                     .attr('text-anchor', 'middle')
                     .attr('x', (d) => d.x)
                     .attr('y', (d) => d.y)
                     .text((d) => d.text)
-                    .on('mouseover', handleMouseOver) // Effet au survol
-                    .on('mouseout', handleMouseOut);  // Retour à la normale
+                    .on('mouseover', handleMouseOver)
+                    .on('mouseout', handleMouseOut);
 
-                // Animation
                 animateMovement(textElements);
             }
 
             function getSpaceColor() {
                 const colors = [
-                    '#001f3f',
-                    '#3D59AB',
-                    '#483D8B',
+                    '#22253a',
+                    '#466f7c',
                     '#000000',
-                    '#1E90FF',
+                    '#00c4b3',
                     '#9370DB',
                 ];
                 return colors[Math.floor(Math.random() * colors.length)];
@@ -96,8 +98,8 @@ const WordCloud = () => {
                 d3.select(event.target)
                     .transition()
                     .duration(200)
-                    .style('fill', '#dda20c') // Change la couleur
-                    .style('font-size', `${d.size * 1}px`) // Agrandit légèrement
+                    .style('fill', '#dda20c')
+                    .style('font-size', `${d.size * 1.2}px`) // Agrandit légèrement
                     .attr('x', d.x + Math.random() * 30 - 15) // Déplace légèrement horizontalement
                     .attr('y', d.y + Math.random() * 30 - 15); // Déplace légèrement verticalement
             }
@@ -113,7 +115,6 @@ const WordCloud = () => {
             }
         };
 
-        // Appel de l'API pour récupérer les mots
         fetchWords();
     }, []);
 
