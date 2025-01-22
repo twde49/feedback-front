@@ -19,7 +19,7 @@ body{
     background: linear-gradient(90deg, #ff00cc, #53185A);
     -webkit-background-clip: text;
     color: transparent;
-    animation: portal 4s infinite;
+    animation: portal 2s infinite;
     rotate: 180deg;
 }
 
