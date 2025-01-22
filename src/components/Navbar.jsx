@@ -13,6 +13,7 @@ const NavBar = () => {
                 justifyContent: 'space-between',
                 zIndex: 1000,
                 boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.5)',
+                marginBottom: "200px"
             }}
         >
             <div style={{ display: 'flex', alignItems: 'center' }}>

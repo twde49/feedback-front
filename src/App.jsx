@@ -7,6 +7,7 @@ import Audio from "./pages/Audio.jsx";
 import Pierre from "./pages/Pierre.jsx";
 import Enzo from './pages/Enzo.jsx';
 import Workshop from './pages/Workshop.jsx';
+import Api from "./pages/api.jsx";
 
 
 const App = () => {
@@ -17,6 +18,8 @@ const App = () => {
           <Route path="/nuage" element={<Nuage />} />
           <Route path="/audio" element={<Audio />} />
           <Route path="/pierre" element={<Pierre />} />
+          <Route path="/api" element={<Api />} />
+
             <Route path="/enzo" element={<Enzo />} />
             <Route path="/enzo/:id" element={<Workshop />} />
 
