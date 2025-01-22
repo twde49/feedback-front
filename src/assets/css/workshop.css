@@ -1,3 +1,4 @@
+
 .banner{
     height: 20vh;
     width: 100%;
@@ -10,12 +11,6 @@
     justify-content: center;
     align-items: center;
 }
-.zoom-details {
-
-}
-.zoom-title {
-
-}
-.zoom-content {
-
+.workshop-card{
+    border: #1a1a1a 1px ;
 }

@@ -3,6 +3,7 @@
 import '../index.css';
 import  '../assets/css/workshop.css';
 import { useParams } from 'react-router-dom';
+import Card from "../components/card.jsx"
 
 function App() {
 
@@ -35,16 +36,25 @@ function App() {
                     {workshop.content}
                 </p>
             </div>
+
+
+
         );
     }
     return (
         <>
+
+            <Card
+                name={"Jean"}
+                profession={"B2 dev"}
+            />
+
             <p>Blala</p>
             <div className="bg-blue-500 text-white text-3xl font-bold p-5">
                 <ZoomInWorkshop />
             </div>
         </>
-    )
+    );
 }
 
 export default App
