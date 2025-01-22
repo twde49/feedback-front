@@ -6,6 +6,8 @@ import {Link} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 
 function App() {
+    
+
     const workshops = [
         { title: 'Mapping',content: 'Je suis mapping',  id: 1 },
         { title: 'Sceno',  id: 2 },
