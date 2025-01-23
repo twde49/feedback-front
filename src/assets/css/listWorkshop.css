@@ -1,5 +1,7 @@
 body{
-    background-color: #29153A;
+    background: radial-gradient(circle, #1d1d27, #0c0c15);
+    background-size: cover; /* Facultatif : pour s'assurer que le dégradé couvre tout */
+    background-repeat: no-repeat;
 }
 
 .workshop-item {
@@ -11,6 +13,11 @@ body{
 
 }
 
+.workshop-description{
+    font-size: small;
+    font-weight: normal;
+}
+
 .workshop-item:hover .titre {
     font-variation-settings: "wght" 100, "ital" 0;
     text-shadow: none;
@@ -20,19 +27,7 @@ body{
     -webkit-background-clip: text;
     color: transparent;
     animation: portal 2s infinite;
-    rotate: 180deg;
 }
 
-@keyframes portal {
-    0% {
-        clip-path: circle(0% at 50% 50%);
-    }
-    50% {
-        clip-path: circle(70% at 50% 50%);
-    }
-    100% {
-        clip-path: circle(0% at 50% 50%);
-    }
-}
 
 
