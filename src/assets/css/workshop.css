@@ -1,15 +1,7 @@
-.banner{
-    height: 20vh;
-    width: 100%;
-    background-color: coral;
+body{
+    background: radial-gradient(circle, #1d1d27, #0c0c15);
 }
-.zoom-container {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid black;
-    justify-content: center;
-    align-items: center;
-}
+
 .workshop-container{
     padding-top: 50px;
 }
