@@ -8,6 +8,8 @@ import Pierre from "./pages/Pierre.jsx";
 import Enzo from './pages/ListWorkshop.jsx';
 import Workshop from './pages/Workshop.jsx';
 import Api from "./pages/api.jsx";
+import Camera from "./pages/Camera.jsx";
+import Sphere from "./pages/Sphere.jsx";
 
 
 const App = () => {
@@ -15,7 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/camera" element={<Camera />} />
-
+          <Route path="/sphere" element={<Sphere />} />
           <Route path="/malakaya" element={<Kaya />} />
           <Route path="/nuage" element={<Nuage />} />
           <Route path="/audio" element={<Audio />} />
