@@ -7,18 +7,21 @@ import Audio from "./pages/Audio.jsx";
 import Pierre from "./pages/Pierre.jsx";
 import Enzo from './pages/Enzo.jsx';
 import Workshop from './pages/Workshop.jsx';
+import Camera from './pages/Camera.jsx';
 
 
 const App = () => {
   return (
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/camera" element={<Camera />} />
+
           <Route path="/malakaya" element={<Kaya />} />
           <Route path="/nuage" element={<Nuage />} />
           <Route path="/audio" element={<Audio />} />
           <Route path="/pierre" element={<Pierre />} />
-            <Route path="/enzo" element={<Enzo />} />
-            <Route path="/enzo/:id" element={<Workshop />} />
+          <Route path="/enzo" element={<Enzo />} />
+          <Route path="/enzo/:id" element={<Workshop />} />
 
 
 
