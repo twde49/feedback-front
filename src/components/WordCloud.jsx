@@ -18,21 +18,27 @@ const WordCloud = () => {
 
         const fetchWords = async () => {
             try {
-                const response = await axios.get('https://random-word-api.herokuapp.com/word', {
-                    params: { number: 30 },
+                const response = await axios.get('https://de-feedback.esdlyon.dev/api/word', {
                     lang: 'fr',
                 });
 
-                const words = response.data.map((word, index) => ({
-                    text: word,
-                    size: Math.floor(Math.random() * 30) + 20 + index, // Taille aléatoire
+                if (response.data.length === 0) {
+                    console.error('Aucun mot reçu de l\'API');
+                    return;
+                }
+
+                console.log(response.data);
+                const words = response.data.map((item) => ({
+                    text: item.word,
+                    size: Math.floor(Math.random() * 30) + 20 + item.count,
                 }));
+
+                console.log('Mots pour le nuage :', words);
                 createWordCloud(words);
             } catch (error) {
                 console.error('Erreur lors du chargement des mots :', error);
             }
         };
-
 
         const createWordCloud = (words) => {
             d3.select(svgRef.current).selectAll('*').remove();
@@ -40,7 +46,7 @@ const WordCloud = () => {
             const layout = d3Cloud()
                 .size([width, height])
                 .words(words)
-                .padding(40)
+                .padding(20)
                 .font('Orbitron')
                 .fontSize((d) => d.size) // Taille des mots
                 .rotate(() => 0) // Pas de rotation

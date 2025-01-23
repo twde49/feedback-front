@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import RecordRTC from "recordrtc";
 import axios from "axios";
+import * as qs from "postcss";
 
 const App = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -51,6 +52,10 @@ const App = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+// Créer une fonction et lui passer response.data.text
+      let responseApi = await fetchWords(response.data.text);
+
+      console.log(responseApi);
 
       console.log("Transcription:", response.data.text);
       setTranscription(response.data.text);
@@ -178,6 +183,27 @@ const App = () => {
 
     draw();
   };
+
+
+  const fetchWords = async (word) => {
+    const URL = "https://de-feedback.esdlyon.dev";
+    console.log("Payload envoyé :", word);
+
+    let data = {
+      "sentence": word,
+    };
+
+    try {
+      const response = await axios.post(`${URL}/api/wordcloud`, data);
+      console.log("Réponse :", response);
+      return response;
+    } catch (err) {
+      console.error("Erreur lors de la requête :", err.response ? err.response.data : err.message);
+    }
+  };
+
+
+
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>

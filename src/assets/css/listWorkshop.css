@@ -1,0 +1,33 @@
+body{
+    background: radial-gradient(circle, #1d1d27, #0c0c15);
+    background-size: cover; /* Facultatif : pour s'assurer que le dégradé couvre tout */
+    background-repeat: no-repeat;
+}
+
+.workshop-item {
+    transition: width 2s, height 4s, transform 0.5s;
+}
+.workshop-item:hover {
+    transform: scale(1.2);
+    transition-delay: 0s;
+
+}
+
+.workshop-description{
+    font-size: small;
+    font-weight: normal;
+}
+
+.workshop-item:hover .titre {
+    font-variation-settings: "wght" 100, "ital" 0;
+    text-shadow: none;
+    color: white;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff00cc, #53185A);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: portal 2s infinite;
+}
+
+
+
