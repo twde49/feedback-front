@@ -23,11 +23,8 @@ const App = () => {
           <Route path="/audio" element={<Audio />} />
           <Route path="/pierre" element={<Pierre />} />
           <Route path="/api" element={<Api />} />
-
-            <Route path="/enzo" element={<Enzo />} />
-            <Route path="/enzo/:id" element={<Workshop />} />
-
-
+          <Route path="/enzo" element={<Enzo />} />
+          <Route path="/enzo/:id" element={<Workshop />} />
 
         </Routes>
 

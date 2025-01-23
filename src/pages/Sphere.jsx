@@ -1,73 +1,96 @@
-import * as THREE from 'three';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const Sphere = () => {
+  const mountRef = useRef(null);
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setAnimationLoop(animate);
-document.body.appendChild(renderer.domElement);
+  useEffect(() => {
+    // Initialiser la scène
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
 
-// Charger une vidéo comme texture
-const video = document.createElement('video');
-video.src = './public/video.mp4'; // Remplace par le chemin de ta vidéo
-video.loop = true; // Faire en sorte que la vidéo boucle
-video.muted = true; // Mute la vidéo
-video.play(); // Démarre la vidéo
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    mountRef.current.appendChild(renderer.domElement);
 
-const videoTexture = new THREE.VideoTexture(video); // Convertir la vidéo en texture
-videoTexture.minFilter = THREE.LinearFilter; // Ajustement des filtres
-videoTexture.magFilter = THREE.LinearFilter;
-videoTexture.format = THREE.RGBFormat;
+    // Charger une vidéo comme texture
+    const video = document.createElement("video");
+    video.src = "./public/video.mp4"; // Remplace par le chemin de ta vidéo
+    video.loop = true;
+    video.muted = true;
+    video.play();
 
-// Création d'une sphère avec la vidéo appliquée comme texture
-const sphereGeometry = new THREE.SphereGeometry(50, 32, 32);
-const sphereMaterial = new THREE.MeshBasicMaterial({
-  map: videoTexture, // Appliquer la vidéo comme texture
-  side: THREE.BackSide, // Permet de voir l'intérieur de la sphère
-});
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-scene.add(sphere);
+    const videoTexture = new THREE.VideoTexture(video);
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.magFilter = THREE.LinearFilter;
+    videoTexture.format = THREE.RGBFormat;
 
-// Cube au centre de la scène
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+    // Création d'une sphère avec la vidéo appliquée comme texture
+    const sphereGeometry = new THREE.SphereGeometry(50, 32, 32);
+    const sphereMaterial = new THREE.MeshBasicMaterial({
+      map: videoTexture,
+      side: THREE.BackSide,
+    });
+    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    scene.add(sphere);
 
-// Créer des objets parents pour la caméra
-const cameraGroup = new THREE.Group(); // Gère les rotations gauche/droite
-const verticalGroup = new THREE.Group(); // Gère les rotations haut/bas
-verticalGroup.add(camera);
-cameraGroup.add(verticalGroup);
-scene.add(cameraGroup);
+    // Cube au centre de la scène
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-camera.position.z = 5;
+    // Créer des groupes de caméra
+    const cameraGroup = new THREE.Group();
+    const verticalGroup = new THREE.Group();
+    verticalGroup.add(camera);
+    cameraGroup.add(verticalGroup);
+    scene.add(cameraGroup);
 
-// Variables pour contrôler les mouvements de la caméra
-let rotationX = 0; // Rotation haut/bas
-let rotationY = 0; // Rotation gauche/droite
-const rotationSpeed = 0.02; // Vitesse de rotation
+    camera.position.z = 5;
 
-// Écouteur pour capturer les mouvements de souris
-window.addEventListener('mousemove', (event) => {
-  const mouseX = (event.clientX / window.innerWidth) * 2 - 1; // Normaliser entre -1 et 1
-  const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+    let rotationX = 0;
+    let rotationY = 0;
+    const rotationSpeed = 0.02;
 
-  rotationY = -mouseX * Math.PI; // Gauche/droite inversé
-  rotationX = -mouseY * Math.PI * 0.5; // Haut/bas reste le même
-});
+    const handleMouseMove = (event) => {
+      const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
 
-// Fonction d'animation
-function animate() {
-  // Appliquer les rotations au groupe
-  cameraGroup.rotation.y = rotationY; // Gauche/droite
-  verticalGroup.rotation.x = rotationX; // Haut/bas
+      rotationY = -mouseX * Math.PI;
+      rotationX = -mouseY * Math.PI * 0.5;
+    };
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+    window.addEventListener("mousemove", handleMouseMove);
 
-  renderer.render(scene, camera);
-}
+    // Fonction d'animation
+    const animate = () => {
+      cameraGroup.rotation.y = rotationY;
+      verticalGroup.rotation.x = rotationX;
 
-export default animate;
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    // Nettoyer lors du démontage du composant
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      mountRef.current.removeChild(renderer.domElement);
+      renderer.dispose();
+    };
+  }, []);
+
+  return <div ref={mountRef} style={{ width: "100%", height: "100%" }} />;
+};
+
+export default Sphere;
