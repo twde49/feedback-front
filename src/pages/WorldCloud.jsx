@@ -131,7 +131,8 @@ const WordCloud = () => {
     // Intervalle toutes les 3 secondes (modifiez l'action ici si nécessaire)
     const intervalId = setInterval(() => {
       console.log('Interval triggered every 3 seconds');
-      // Vous pouvez ajouter une autre action ici
+      fetchWords();
+
     }, 3000);
 
     // Nettoyage à la fin
