@@ -35,7 +35,7 @@ function App() {
 
         const listItems = workshops.map(workshop => (
             <Link
-                to={`/enzo/${workshop.id}`}
+                to={`/workshops/${workshop.id}`}
                 className="workshop-item bg-white text-black font-bold size-fit flex flex-col rounded-lg p-2 justify-center items-center border-2 h-1/4 w-1/5 border-transparent"
                 key={workshop.id}
             >

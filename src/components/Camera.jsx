@@ -1,35 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import * as handTrack from "handtrackjs";
-import { useMovement } from "../context/MovementContext";
-
+import {useMovement} from "../context/MovementContext";
 
 export const Camera = () => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [isModelLoaded, setIsModelLoaded] = useState(false);
     const [model, setModel] = useState(null);
-    const [prevPosition, setPrevPosition] = useState(null);
     const [movementCooldown, setMovementCooldown] = useState(false);
-    const { setMovement } = useMovement();
-
-    useEffect(() => {
-        if (movementCooldown) {
-            const timeout = setTimeout(() => {
-                setMovementCooldown(false);
-            }, 5000);
-            return () => clearTimeout(timeout);
-        }
-    }, [movementCooldown]);
+    const {setMovement} = useMovement();
+    const prevPositionRef = useRef(null);
 
     useEffect(() => {
         const modelParams = {
             flipHorizontal: false,
-            imageScaleFactor: .2,
+            imageScaleFactor: 0.8,
             maxNumBoxes: 1,
-            iouThreshold: 0.5,
-            scoreThreshold: 0.80,
-            modelSize: "large",
+            iouThreshold: 0.3,
+            scoreThreshold: 0.85,
             modelType: "ssd640fpnlite",
+            modelSize: "large",
         };
 
         handTrack.load(modelParams).then((loadedModel) => {
@@ -39,32 +29,32 @@ export const Camera = () => {
 
         handTrack.startVideo(videoRef.current).then((status) => {
             if (!status) {
-                console.error("no status");
+                console.error("Video not started");
             }
         });
 
         return () => {
-            if (videoRef) {
-                handTrack.stopVideo(videoRef).then((status) => {
-                    console.log(status);
-                });
-            }
+            handTrack.stopVideo(videoRef.current).then(() => {
+                console.log("Video stopped");
+            });
         };
     }, []);
 
+    const detectLargeMovements = (currentX) => {
+        const movementThreshold = 20;
+        if (!movementCooldown && prevPositionRef.current !== null) {
+            const movement = currentX - prevPositionRef.current;
+            if (Math.abs(movement) > movementThreshold) {
+                setMovement(movement > 0 ? "left" : "right");
+                setMovementCooldown(true);
+                setTimeout(() => setMovementCooldown(false), 1000);
+            }
+        }
+        prevPositionRef.current = currentX;
+    };
+
     useEffect(() => {
         let animationFrameId;
-        const detectLargeMovements = (prevX, currentX) => {
-            if (!movementCooldown && prevX !== null) {
-                const movement = currentX - prevX;
-                if (Math.abs(movement) > 100) {
-                    setMovement(movement > 0 ? "right" : "left");
-                    setMovementCooldown(true);
-                }else {
-                    console.log('cool');
-                }
-            }
-        };
 
         const runDetection = () => {
             if (model && videoRef.current) {
@@ -88,16 +78,9 @@ export const Camera = () => {
                         );
                         context.lineWidth = 2;
                         context.strokeStyle = "red";
-                        context.fillStyle = "red";
                         context.stroke();
-                        context.fillText(
-                            prediction.label,
-                            prediction.bbox[0],
-                            prediction.bbox[1] > 10 ? prediction.bbox[1] - 5 : 10
-                        );
 
-                        detectLargeMovements(prevPosition, prediction.bbox[0]);
-                        setPrevPosition(prediction.bbox[0]);
+                        detectLargeMovements(prediction.bbox[0]);
                     });
                 });
             }
@@ -108,15 +91,13 @@ export const Camera = () => {
             runDetection();
         }
 
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, [isModelLoaded, model, movementCooldown, prevPosition]);
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [isModelLoaded, model, movementCooldown]);
 
     return (
         <div>
-            <video hidden={false} ref={videoRef} autoPlay style={{ display: "none" }}></video>
-            <canvas hidden={false} ref={canvasRef} style={{ border: "1px solid black" }}></canvas>
+            <video hidden={false} ref={videoRef} autoPlay style={{display: "none"}}></video>
+            <canvas hidden={false} ref={canvasRef} style={{border: "1px solid black"}}></canvas>
         </div>
     );
 };
