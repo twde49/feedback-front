@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import RecordRTC from "recordrtc";
 import axios from "axios";
-import * as qs from "postcss";
 
 const App = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -187,7 +186,6 @@ const App = () => {
 
   const fetchWords = async (word) => {
     const URL = "https://de-feedback.esdlyon.dev";
-    console.log("Payload envoyé :", word);
 
     let data = {
       "sentence": word,
