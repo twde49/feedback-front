@@ -5,8 +5,7 @@ import Audio from "./pages/Audio.jsx";
 import ListWorkshop from './pages/ListWorkshop.jsx';
 import Workshop from './pages/Workshop.jsx';
 import Api from "./pages/api.jsx";
-import Camera from "./pages/camDetection.jsx";
-
+import Camera from "./components/Camera.jsx"
 
 const App = () => {
   return (

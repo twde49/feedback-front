@@ -26,6 +26,24 @@ const Wordcloud = () => {
     }
   }, [movement]);
 
+
+  useEffect(() => {
+    const updateWordCloudPosition = () => {
+      d3.select(svgRef.current)
+        .select("g")
+        .transition()
+        .duration(1000) // Smooth animation duration
+        .ease(d3.easeCubicOut)
+        .attr(
+          "transform",
+          `translate(${window.innerWidth / 2 + offset.x}, ${window.innerHeight / 2 + offset.y})`
+        );
+    };
+
+    updateWordCloudPosition();
+  }, [offset]);
+
+
   useEffect(() => {
     const link = document.createElement("link");
     link.href =
@@ -96,6 +114,7 @@ const Wordcloud = () => {
           .style("font-size", (d) => `${d.size}px`)
           .style("font-family", "Orbitron")
           .style("fill", () => getSpaceColor())
+          .style("cursor","default")
           .attr("text-anchor", "middle")
           .attr("x", (d) => d.x)
           .attr("y", (d) => d.y)
